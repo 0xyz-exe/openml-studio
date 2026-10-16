@@ -113,7 +113,7 @@ def get_metrics(run_id: str, db: Session = Depends(get_db)):
     
     return [_metric_to_dict(m) for m in db.query(Metric).filter(Metric.run_id == run_id).order_by(Metric.step).all()]
 
-@router.get("/compare", response_model=dict)
+@router.get("/compare")
 def compare_runs(run_ids: str = Query(...), db: Session = Depends(get_db)):
     ids = [rid.strip() for rid in run_ids.split(",")]
     runs = db.query(Run).filter(Run.id.in_(ids)).all()
@@ -121,23 +121,23 @@ def compare_runs(run_ids: str = Query(...), db: Session = Depends(get_db)):
     if len(runs) != len(ids):
         raise HTTPException(status_code=404, detail="One or more runs not found")
     
-    # Get final metrics (max step) for each run
+    # Get final metrics (last step) for each run
     comparison = []
     for run in runs:
-        final_metrics = (
-            db.query(Metric.name, Metric.value)
-            .filter(Metric.run_id == run.id)
-            .group_by(Metric.name)
-            .having(Metric.step == func.max(Metric.step))
-            .all()
-        )
+        metrics = db.query(Metric).filter(Metric.run_id == run.id).all()
+        
+        # Get max step per metric name
+        final_metrics = {}
+        for m in metrics:
+            if m.name not in final_metrics or m.step > final_metrics[m.name]['step']:
+                final_metrics[m.name] = {'value': m.value, 'step': m.step}
         
         comparison.append({
             "run_id": run.id,
             "name": run.name,
-            "status": run.status,
+            "status": run.status.value,
             "params": run.params,
-            "metrics": {m.name: m.value for m in final_metrics}
+            "metrics": {name: data['value'] for name, data in final_metrics.items()}
         })
     
     return {"runs": comparison}
