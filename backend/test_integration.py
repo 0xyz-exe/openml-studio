@@ -104,6 +104,9 @@ run2 = resp.json()
 resp = client.post(f"/api/runs/{run2['id']}/metrics", json=[{"name": "loss", "value": 0.4, "step": 1}])
 assert resp.status_code == 201
 
+resp = client.patch(f"/api/runs/{run2['id']}", json={"status": "completed"})
+assert resp.status_code == 200
+
 resp = client.get(f"/api/runs/compare?run_ids={run['id']},{run2['id']}")
 assert resp.status_code == 200, f"Failed: {resp.text}"
 comparison = resp.json()
