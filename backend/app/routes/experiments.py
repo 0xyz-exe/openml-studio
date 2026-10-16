@@ -1,13 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
+from typing import Optional
 from ..database import get_db
 from ..models import Experiment, Project
-from ..schemas import ExperimentCreate, ExperimentResponse
 
 router = APIRouter()
-
-def _exp_to_dict(e):
-    return {"id": e.id, "project_id": e.project_id, "name": e.name, "created_at": e.created_at.isoformat()}
 
 @router.post("", status_code=201)
 def create_experiment(experiment: dict, db: Session = Depends(get_db)):
@@ -23,11 +20,24 @@ def create_experiment(experiment: dict, db: Session = Depends(get_db)):
     db.add(db_experiment)
     db.commit()
     db.refresh(db_experiment)
-    return _exp_to_dict(db_experiment)
+    return {
+        "id": db_experiment.id,
+        "project_id": db_experiment.project_id,
+        "name": db_experiment.name,
+        "created_at": db_experiment.created_at.isoformat()
+    }
+
+def _exp_to_dict(e):
+    return {
+        "id": e.id, 
+        "project_id": e.project_id, 
+        "name": e.name, 
+        "created_at": e.created_at.isoformat()
+    }
 
 @router.get("")
 def list_experiments(
-    project_id: int | None = Query(None),
+    project_id: Optional[int] = Query(None),
     db: Session = Depends(get_db)
 ):
     query = db.query(Experiment)

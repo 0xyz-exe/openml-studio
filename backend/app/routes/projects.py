@@ -3,7 +3,6 @@ from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
 from ..database import get_db
 from ..models import Project
-from ..schemas import ProjectCreate, ProjectResponse
 
 router = APIRouter()
 

@@ -6,7 +6,6 @@ from uuid import uuid4
 import os
 from ..database import get_db
 from ..models import Run, Artifact
-from ..schemas import ArtifactResponse
 
 router = APIRouter()
 
