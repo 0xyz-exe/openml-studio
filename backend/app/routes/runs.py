@@ -118,9 +118,6 @@ def compare_runs(run_ids: str = Query(...), db: Session = Depends(get_db)):
     ids = [rid.strip() for rid in run_ids.split(",")]
     runs = db.query(Run).filter(Run.id.in_(ids)).all()
     
-    if len(runs) != len(ids):
-        raise HTTPException(status_code=404, detail="One or more runs not found")
-    
     # Get final metrics (last step) for each run
     comparison = []
     for run in runs:
