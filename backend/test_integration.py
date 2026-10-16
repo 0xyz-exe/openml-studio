@@ -6,8 +6,12 @@ Run: python test_integration.py
 from starlette.testclient import TestClient
 from app.main import app
 import json
+import time
 
 client = TestClient(app)
+
+# Use timestamp for unique names
+test_id = int(time.time())
 
 print("="*60)
 print("OpenML Studio Integration Test")
@@ -15,7 +19,7 @@ print("="*60)
 
 # Test 1: Create Project
 print("\n1. Creating project...")
-resp = client.post("/api/projects", json={"name": "integration-test", "description": "Full test"})
+resp = client.post("/api/projects", json={"name": f"integration-test-{test_id}", "description": "Full test"})
 assert resp.status_code == 201, f"Failed: {resp.text}"
 project = resp.json()
 print(f"   ✓ Project created: ID={project['id']}")
@@ -100,7 +104,7 @@ run2 = resp.json()
 resp = client.post(f"/api/runs/{run2['id']}/metrics", json=[{"name": "loss", "value": 0.4, "step": 1}])
 assert resp.status_code == 201
 
-resp = client.get(f"/api/compare?run_ids={run['id']},{run2['id']}")
+resp = client.get(f"/api/runs/compare?run_ids={run['id']},{run2['id']}")
 assert resp.status_code == 200, f"Failed: {resp.text}"
 comparison = resp.json()
 print(f"   ✓ Compared {len(comparison['runs'])} runs")
