@@ -2,19 +2,19 @@ import Link from 'next/link'
 import MetricChart from '@/components/MetricChart'
 
 async function getRun(id: string) {
-  const res = await fetch(`http://localhost:8000/api/runs/${id}`, { cache: 'no-store' })
+  const res = await fetch(`http://localhost:8001/api/runs/${id}`, { cache: 'no-store' })
   if (!res.ok) return null
   return res.json()
 }
 
 async function getMetrics(id: string) {
-  const res = await fetch(`http://localhost:8000/api/runs/${id}/metrics`, { cache: 'no-store' })
+  const res = await fetch(`http://localhost:8001/api/runs/${id}/metrics`, { cache: 'no-store' })
   if (!res.ok) return []
   return res.json()
 }
 
 async function getArtifacts(id: string) {
-  const res = await fetch(`http://localhost:8000/api/artifacts/${id}`, { cache: 'no-store' })
+  const res = await fetch(`http://localhost:8001/api/artifacts/${id}`, { cache: 'no-store' })
   if (!res.ok) return []
   return res.json()
 }
@@ -29,7 +29,7 @@ export default async function RunPage({ params }: { params: { id: string } }) {
   }
 
   // Get unique metric names
-  const metricNames = Array.from(new Set(metrics.map((m: any) => m.name)))
+  const metricNames: string[] = Array.from(new Set<string>(metrics.map((m: any) => m.name)))
   
   // Calculate final metrics (last step value)
   const finalMetrics: Record<string, number> = {}
@@ -140,7 +140,7 @@ export default async function RunPage({ params }: { params: { id: string } }) {
                       </td>
                       <td className="px-6 py-4">
                         <a
-                          href={`http://localhost:8000/api/artifacts/download/${artifact.id}`}
+                          href={`http://localhost:8001/api/artifacts/download/${artifact.id}`}
                           className="text-blue-600 hover:underline text-sm"
                           download
                         >

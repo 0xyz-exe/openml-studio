@@ -55,6 +55,32 @@ def list_runs(
         query = query.filter(Run.status == status)
     return [_run_to_dict(r) for r in query.order_by(Run.start_time.desc()).limit(limit).all()]
 
+@router.get("/compare")
+def compare_runs(run_ids: str = Query(...), db: Session = Depends(get_db)):
+    ids = [rid.strip() for rid in run_ids.split(",")]
+    runs = db.query(Run).filter(Run.id.in_(ids)).all()
+    
+    # Get final metrics (last step) for each run
+    comparison = []
+    for run in runs:
+        metrics = db.query(Metric).filter(Metric.run_id == run.id).all()
+        
+        # Get max step per metric name
+        final_metrics = {}
+        for m in metrics:
+            if m.name not in final_metrics or m.step > final_metrics[m.name]['step']:
+                final_metrics[m.name] = {'value': m.value, 'step': m.step}
+        
+        comparison.append({
+            "run_id": run.id,
+            "name": run.name,
+            "status": run.status.value,
+            "params": run.params,
+            "metrics": {name: data['value'] for name, data in final_metrics.items()}
+        })
+    
+    return {"runs": comparison}
+
 @router.get("/{run_id}")
 def get_run(run_id: str, db: Session = Depends(get_db)):
     run = db.query(Run).filter(Run.id == run_id).first()
@@ -112,29 +138,3 @@ def get_metrics(run_id: str, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Run not found")
     
     return [_metric_to_dict(m) for m in db.query(Metric).filter(Metric.run_id == run_id).order_by(Metric.step).all()]
-
-@router.get("/compare")
-def compare_runs(run_ids: str = Query(...), db: Session = Depends(get_db)):
-    ids = [rid.strip() for rid in run_ids.split(",")]
-    runs = db.query(Run).filter(Run.id.in_(ids)).all()
-    
-    # Get final metrics (last step) for each run
-    comparison = []
-    for run in runs:
-        metrics = db.query(Metric).filter(Metric.run_id == run.id).all()
-        
-        # Get max step per metric name
-        final_metrics = {}
-        for m in metrics:
-            if m.name not in final_metrics or m.step > final_metrics[m.name]['step']:
-                final_metrics[m.name] = {'value': m.value, 'step': m.step}
-        
-        comparison.append({
-            "run_id": run.id,
-            "name": run.name,
-            "status": run.status.value,
-            "params": run.params,
-            "metrics": {name: data['value'] for name, data in final_metrics.items()}
-        })
-    
-    return {"runs": comparison}

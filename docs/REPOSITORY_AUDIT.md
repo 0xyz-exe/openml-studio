@@ -83,7 +83,7 @@ Run statuses: `queued`, `running`, `completed`, `failed`, `cancelled`
 ```python
 from openml_studio import Client
 
-client = Client("http://localhost:8000")
+client = Client("http://localhost:8001")
 
 with client.start_run(project="p", experiment="e") as run:
     run.log_params({"lr": 0.001})
@@ -154,7 +154,7 @@ Features:
 - Authentication/authorization
 - API rate limiting
 - Input size limits (file upload, metric batch)
-- CORS restricted to localhost:3000
+- CORS restricted to localhost:3001
 - No secrets management
 
 ## Performance
@@ -195,7 +195,7 @@ Features:
 1. Verify backend starts (`uvicorn app.main:app`)
 2. Run `python examples/quick_start.py`
 3. `cd frontend && npm install && npm run dev`
-4. Access http://localhost:3000
+4. Access http://localhost:3001
 5. Write tests (pytest, Playwright)
 6. Add security audit
 7. Document deployment

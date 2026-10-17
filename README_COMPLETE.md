@@ -205,7 +205,7 @@ python test_integration.py
 ```python
 from openml_studio import Client
 
-client = Client("http://localhost:8000")
+client = Client("http://localhost:8001")
 
 with client.start_run(
     project="my-project",
@@ -224,7 +224,7 @@ with client.start_run(
 cd frontend
 npm install
 npm run dev
-# Visit http://localhost:3000
+# Visit http://localhost:3001
 ```
 
 ---
@@ -255,7 +255,7 @@ Works with PyTorch, TensorFlow, scikit-learn, Ultralytics YOLO, or any Python tr
 - ❌ SQLite only (no PostgreSQL)
 - ❌ Local storage only (no S3)
 - ❌ No search/tags
-- ❌ CORS: localhost:3000 only
+- ❌ CORS: localhost:3001 only
 
 ---
 

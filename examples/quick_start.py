@@ -29,7 +29,7 @@ def train_model(epochs: int, learning_rate: float):
     return metrics
 
 def main():
-    client = Client("http://localhost:8000")
+    client = Client("http://localhost:8001")
     
     # Hyperparameters
     learning_rate = 0.001
@@ -73,7 +73,7 @@ def main():
         model_path.unlink()  # Clean up
         
         print(f"\n✓ Run completed: {run.run_id}")
-        print(f"View at: http://localhost:3000/runs/{run.run_id}")
+        print(f"View at: http://localhost:3001/runs/{run.run_id}")
 
 if __name__ == "__main__":
     main()

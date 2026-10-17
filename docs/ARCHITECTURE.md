@@ -109,8 +109,8 @@ GET    /api/compare?run_ids=a,b,c
 
 Single-machine:
 ```
-backend/   → uvicorn on :8000
-frontend/  → next dev on :3000 (or next build + start)
+backend/   → uvicorn on :8001
+frontend/  → next dev on :3001 (or next build + start)
 ```
 
 ## Limitations (MVP)

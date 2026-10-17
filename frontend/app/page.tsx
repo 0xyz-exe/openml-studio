@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 async function getProjects() {
-  const res = await fetch('http://localhost:8000/api/projects', { cache: 'no-store' })
+  const res = await fetch('http://localhost:8001/api/projects', { cache: 'no-store' })
   if (!res.ok) return []
   return res.json()
 }

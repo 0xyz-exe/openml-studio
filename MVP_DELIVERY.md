@@ -46,7 +46,7 @@
 - **What works**: Projects API fully functional (create, list, get)
 - **What fails**: POST /api/experiments returns 500 error
 - **Impact**: Cannot create experiments via SDK or API
-- **Test**: `curl -X POST http://localhost:8000/api/experiments -H "Content-Type: application/json" -d '{"project_id":1,"name":"test"}'`
+- **Test**: `curl -X POST http://localhost:8001/api/experiments -H "Content-Type: application/json" -d '{"project_id":1,"name":"test"}'`
 - **Expected**: Experiment created
 - **Actual**: `Internal Server Error`
 - **Root cause**: Likely datetime serialization bug in `backend/app/routes/experiments.py`
@@ -86,7 +86,7 @@ Added `_to_dict()` helpers in each route to convert SQLAlchemy models to JSON-se
 |-----------|--------|
 | Backend structure | ✅ Complete |
 | Database schema | ✅ 5 tables created |
-| Backend starts | ✅ Uvicorn running on :8000 |
+| Backend starts | ✅ Uvicorn running on :8001 |
 | Projects API | ✅ Works (tested via curl) |
 | Experiments API | ❌ 500 error |
 | Runs API | ⚠️ Not tested (blocked by experiments) |
@@ -104,7 +104,7 @@ Added `_to_dict()` helpers in each route to convert SQLAlchemy models to JSON-se
 1. **DEBUG: Fix experiment creation 500 error**
    - Check backend console output when POST /api/experiments is called
    - Likely issue: datetime serialization in `_exp_to_dict()` or model creation
-   - Test isolated: `curl -X POST http://localhost:8000/api/experiments -H "Content-Type: application/json" -d '{"project_id":1,"name":"test"}'`
+   - Test isolated: `curl -X POST http://localhost:8001/api/experiments -H "Content-Type: application/json" -d '{"project_id":1,"name":"test"}'`
 
 2. **Test full workflow**
    - Once experiments work, run `python examples/quick_start.py`
@@ -112,7 +112,7 @@ Added `_to_dict()` helpers in each route to convert SQLAlchemy models to JSON-se
 
 3. **Test frontend**
    - `cd frontend && npm install && npm run dev`
-   - Visit http://localhost:3000
+   - Visit http://localhost:3001
    - Verify: project list, experiment list, run detail pages
 
 4. **Add input validation**
@@ -177,7 +177,7 @@ Python SDK ──(HTTP)──> Backend API
 - ❌ No search/tags
 - ❌ No distributed lock (concurrent writes may conflict)
 - ❌ No rate limiting
-- ❌ CORS: localhost:3000 only
+- ❌ CORS: localhost:3001 only
 
 ---
 

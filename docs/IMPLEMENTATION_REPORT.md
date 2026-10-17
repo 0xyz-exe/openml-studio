@@ -55,7 +55,7 @@ Indexes: experiments(project_id), runs(experiment_id, status), metrics(run_id, n
 ```python
 from openml_studio import Client
 
-client = Client("http://localhost:8000")
+client = Client("http://localhost:8001")
 
 with client.start_run(project="p", experiment="e") as run:
     run.log_params({"lr": 0.001, "epochs": 10})
@@ -132,7 +132,7 @@ UUID prefix prevents path collisions. No deduplication.
 7. **No search/tags**
 8. **No artifact deduplication**
 9. **No streaming uploads** — Full file in memory
-10. **CORS localhost:3000 only**
+10. **CORS localhost:3001 only**
 
 ---
 
@@ -197,7 +197,7 @@ python -m venv venv
 
 **Test:**
 ```bash
-curl http://localhost:8000/
+curl http://localhost:8001/
 # {"message":"OpenML Studio API","version":"0.1.0"}
 ```
 
@@ -213,7 +213,7 @@ cd ..
 - Creates experiment "baseline"
 - Logs 10 epochs of metrics
 - Uploads artifact
-- Prints run ID and localhost:3000 URL
+- Prints run ID and localhost:3001 URL
 
 ### Frontend
 
@@ -223,7 +223,7 @@ npm install
 npm run dev
 ```
 
-Visit http://localhost:3000
+Visit http://localhost:3001
 
 ---
 

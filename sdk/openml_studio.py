@@ -7,7 +7,7 @@ from datetime import datetime
 import time
 
 class Client:
-    def __init__(self, api_url: str = "http://localhost:8000", timeout: int = 30):
+    def __init__(self, api_url: str = "http://localhost:8001", timeout: int = 30):
         self.api_url = api_url.rstrip("/")
         self.timeout = timeout
         self.session = requests.Session()

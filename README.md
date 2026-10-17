@@ -12,27 +12,53 @@ Open-source MLOps experiment tracker. Framework-agnostic.
 
 ## Quick Start
 
-```bash
-# Backend
+Start the backend and frontend in separate terminals.
+
+### Backend
+
+On Windows PowerShell:
+
+```powershell
 cd backend
 python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
+.\venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 python init_db.py
-uvicorn app.main:app --reload
+python -m uvicorn app.main:app --reload --port 8001
+```
 
-# Frontend
+On macOS/Linux:
+
+```bash
+cd backend
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python init_db.py
+python -m uvicorn app.main:app --reload --port 8001
+```
+
+The API is available at `http://localhost:8001`.
+
+### Frontend
+
+In a second terminal:
+
+```bash
 cd frontend
 npm install
-npm run dev
+npm run dev -- -p 3001
 ```
+
+The web UI is available at `http://localhost:3001`. Do not run `npm run build`
+at the same time as `npm run dev`; both commands use the `.next` build directory.
 
 ## Example Usage
 
 ```python
 from openml_studio import Client
 
-client = Client("http://localhost:8000")
+client = Client("http://localhost:8001")
 
 with client.start_run(project="my-project", experiment="baseline") as run:
     run.log_params({"lr": 0.001, "epochs": 10})

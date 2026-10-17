@@ -1,13 +1,13 @@
 import Link from 'next/link'
 
 async function getProject(id: string) {
-  const res = await fetch(`http://localhost:8000/api/projects/${id}`, { cache: 'no-store' })
+  const res = await fetch(`http://localhost:8001/api/projects/${id}`, { cache: 'no-store' })
   if (!res.ok) return null
   return res.json()
 }
 
 async function getExperiments(projectId: string) {
-  const res = await fetch(`http://localhost:8000/api/experiments?project_id=${projectId}`, { cache: 'no-store' })
+  const res = await fetch(`http://localhost:8001/api/experiments?project_id=${projectId}`, { cache: 'no-store' })
   if (!res.ok) return []
   return res.json()
 }
