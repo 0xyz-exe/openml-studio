@@ -2,6 +2,22 @@
 
 Open-source MLOps experiment tracker. Framework-agnostic.
 
+Repository: https://github.com/0xyz-exe/openml-studio
+
+## Screenshots
+
+### Experiment Run Comparison & Metrics
+![Run comparison](docs/screenshots/01_experiment_compare.png)
+
+### Training Hyperparameters & Run History
+![Run history](docs/screenshots/02_run_history.png)
+
+### Model Artifacts & Metric Visualizations
+![Metric charts](docs/screenshots/03_metrics_charts.png)
+
+### Project Overview & Active Experiments
+![Projects overview](docs/screenshots/04_projects.png)
+
 ## Features (MVP)
 
 - Track experiments, runs, metrics, hyperparameters
