@@ -6,17 +6,21 @@ Repository: https://github.com/0xyz-exe/openml-studio
 
 ## Screenshots
 
-### Experiment Run Comparison & Metrics
-![Run comparison](docs/screenshots/01_experiment_compare.png)
+### 1. Experiment Run Comparison & Metrics
+Tampilan komparasi eksperimen pelatihan machine learning berdampingan (side-by-side) yang membandingkan metrik validasi akhir (akurasi, F1-score, train loss, validation accuracy, dan validation loss) serta konfigurasi hyperparameter (learning rate, ukuran batch, optimizer AdamW/SGD, scheduler, bobot decay, dan teknik augmentasi) secara komprehensif antar run model:
+![Experiment Run Comparison & Metrics](docs/screenshots/01_experiment_compare.png)
 
-### Training Hyperparameters & Run History
-![Run history](docs/screenshots/02_run_history.png)
+### 2. Training Hyperparameters & Run History
+Tabel riwayat eksekusi training model yang mencatat status siklus pelatihan (running, completed, failed), waktu mulai komputasi, jumlah hyperparameter yang terkonfigurasi, nama dataset rujukan, serta tautan cepat ke visualisasi grafik detail setiap eksperimen:
+![Training Hyperparameters & Run History](docs/screenshots/02_run_history.png)
 
-### Model Artifacts & Metric Visualizations
-![Metric charts](docs/screenshots/03_metrics_charts.png)
+### 3. Model Artifacts & Metric Visualizations
+Visualisasi metrik model real-time menggunakan grafik garis interaktif Recharts untuk memantau konvergensi loss dan peningkatan akurasi per epoch, dilengkapi katalog penyimpanan berkas artefak model (checkpoint bobot PyTorch `.pt`, matriks konfusi, dan konfigurasi YAML) dengan ukuran berkas dan fitur unduh langsung:
+![Model Artifacts & Metric Visualizations](docs/screenshots/03_metrics_charts.png)
 
-### Project Overview & Active Experiments
-![Projects overview](docs/screenshots/04_projects.png)
+### 4. Project Overview & Active Experiments
+Dasbor utama OpenML Studio yang menampilkan daftar proyek machine learning aktif (Computer Vision ResNet-50 Classifier, NLP Financial Sentiment LLM, dan Time-Series Volatility Forecaster) dengan deskripsi teknis, tanggal pembuatan proyek, serta navigasi terstruktur menuju kelompok eksperimen:
+![Project Overview & Active Experiments](docs/screenshots/04_projects.png)
 
 ## Features (MVP)
 

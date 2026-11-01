@@ -104,9 +104,9 @@ export default async function RunPage({ params }: { params: { id: string } }) {
 
         {/* Metric Charts */}
         {metricNames.length > 0 && (
-          <section>
+          <section id="metric-charts">
             <h2 className="text-2xl font-semibold mb-4">Metrics Over Time</h2>
-            <div className="space-y-6">
+            <div className="grid grid-cols-2 gap-4">
               {metricNames.map(name => (
                 <MetricChart key={name} metrics={metrics} metricName={name} />
               ))}
@@ -116,7 +116,7 @@ export default async function RunPage({ params }: { params: { id: string } }) {
 
         {/* Artifacts */}
         {artifacts.length > 0 && (
-          <section>
+          <section id="artifacts">
             <h2 className="text-2xl font-semibold mb-4">Artifacts</h2>
             <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
               <table className="w-full">
